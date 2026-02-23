@@ -1,0 +1,138 @@
+/* Snakes & Ladders board (pure HTML + CSS)
+   - 10x10 grid
+   - 1..100 serpentine numbering
+   - bright color blocks + overlay ladders/snakes
+*/
+
+:root{
+  --ink:#111;
+  --bg:#1b1b1b;
+  --frame:#0f0f10;
+  --shadow: 0 20px 50px rgba(0,0,0,.35);
+
+  --yellow:#f6e51c;
+  --blue:#167bd6;
+  --orange:#f27a1a;
+  --green:#28b44a;
+  --purple:#6b2aa6;
+  --teal:#00b6b6;
+  --pink:#ff4aa0;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  background:#0e0f12;
+  display:grid;
+  place-items:center;
+  font-family: Arial, Helvetica, sans-serif;
+  color:#fff;
+}
+
+.page{ width:100%; padding:24px; display:grid; place-items:center; }
+
+.board-wrap{ width:min(92vmin, 880px); }
+
+.board{
+  position:relative;
+  width:100%;
+  aspect-ratio: 1 / 1;
+  background:#0b0b0b;
+  border: 8px solid #101114;
+  box-shadow: var(--shadow);
+  display:grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  overflow:hidden;
+}
+
+.cell{
+  border: 2px solid rgba(0,0,0,.55);
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
+  padding: 10%;
+  position:relative;
+}
+
+.num{
+  font-weight: 800;
+  font-size: clamp(16px, 2.35vmin, 34px);
+  line-height:1;
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 2px 0 rgba(0,0,0,.25);
+}
+
+/* Color palette (cycle to look like reference) */
+.c-yellow{ background: var(--yellow); }
+.c-blue{ background: var(--blue); }
+.c-orange{ background: var(--orange); }
+.c-green{ background: var(--green); }
+.c-purple{ background: var(--purple); }
+.c-teal{ background: var(--teal); }
+.c-pink{ background: var(--pink); }
+
+/* Overlay sits above cells */
+.overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+/* Ladders */
+.ladder{
+  position:absolute;
+  width: 12%;
+  height: 44%;
+  transform-origin: center;
+  border-left: 10px solid #8b5a2b;
+  border-right: 10px solid #8b5a2b;
+  filter: drop-shadow(0 10px 10px rgba(0,0,0,.35));
+}
+
+.ladder span{
+  position:absolute;
+  left:-12px;
+  right:-12px;
+  height: 10px;
+  background:#8b5a2b;
+  border-radius: 2px;
+}
+
+/* rung positions */
+.ladder span:nth-child(1){ top: 12%; }
+.ladder span:nth-child(2){ top: 26%; }
+.ladder span:nth-child(3){ top: 40%; }
+.ladder span:nth-child(4){ top: 54%; }
+.ladder span:nth-child(5){ top: 68%; }
+.ladder span:nth-child(6){ top: 82%; }
+
+/* place ladders similar to image */
+.l1{ left: 14%; top: 23%; transform: rotate(-12deg); height: 52%; }
+.l2{ right: 8%; top: 33%; transform: rotate(0deg); height: 38%; width: 10%; }
+.l3{ left: 52%; top: 62%; transform: rotate(24deg); height: 30%; width: 10%; }
+
+/* Snakes */
+.snake{
+  position:absolute;
+  filter: drop-shadow(0 12px 12px rgba(0,0,0,.35));
+}
+
+.s1{ left: 6%; top: 0%; width: 38%; height: 40%; }
+.s2{ right: 4%; top: 8%; width: 34%; height: 28%; }
+.s3{ right: 8%; bottom: 2%; width: 34%; height: 22%; }
+
+.hint{
+  margin: 14px 0 0;
+  text-align:center;
+  font-size: 13px;
+  color: rgba(255,255,255,.75);
+}
+
+@media (max-width:480px){
+  .cell{ padding: 8%; }
+  .ladder{ border-left-width: 7px; border-right-width: 7px; }
+  .ladder span{ height: 7px; left:-9px; right:-9px; }
+}
